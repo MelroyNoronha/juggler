@@ -11,7 +11,7 @@ var puckX = mid;
 var puckY = innerHeight / 2;
 var gravity = 1;
 
-pen.canvas.addEventListener("mousemove", function(event) {
+pen.canvas.addEventListener("click", function(event) {
   var mouseX = event.clientX;
   var mouseY = event.clientY;
 
@@ -28,6 +28,8 @@ pen.canvas.addEventListener("mousemove", function(event) {
     pen.clearRect(0, 0, innerWidth, innerHeight);
     puck.drawPuck();
   }
+
+  console.log("clicked");
 });
 
 var puck = {
@@ -39,19 +41,29 @@ var puck = {
   },
   moveLeft: function() {
     pen.clearRect(0, 0, innerWidth, innerHeight);
-    puckX += 2;
+    puckX += 50;
     this.drawPuck();
   },
   moveRight: function() {
     pen.clearRect(0, 0, innerWidth, innerHeight);
-    puckX -= 2;
+    puckX -= 50;
     this.drawPuck;
   },
   moveUp: function() {
     pen.clearRect(0, 0, innerWidth, innerHeight);
-    puckY -= 2;
+    puckY -= 50;
     this.drawPuck();
   }
 };
 
-puck.drawPuck();
+setInterval(function() {
+  puckY += 1;
+  if (puckY >= canvas.height - 30) {
+    puckY -= 1;
+  }
+  if (puckY % 2 == 0) {
+    puck.drawPuck();
+  } else {
+    pen.clearRect(0, 0, innerWidth, innerHeight);
+  }
+}, 1000 / 60);
