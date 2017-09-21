@@ -56,14 +56,25 @@ var puck = {
   }
 };
 
-setInterval(function() {
-  puckY += 1;
-  if (puckY >= canvas.height - 30) {
+function keepInsideCanvas() {
+  if (puckY > canvas.height - 30) {
     puckY -= 1;
   }
-  if (puckY % 2 == 0) {
-    puck.drawPuck();
-  } else {
-    pen.clearRect(0, 0, innerWidth, innerHeight);
+  if (puckX > canvas.width - 30) {
+    puckX -= 1;
   }
+}
+
+function emulateGravity() {
+  puck.drawPuck();
+  puckY += 2;
+  keepInsideCanvas();
+  requestAnimationFrame(emulateGravity);
+  console.log("emulateGravity running");
+}
+
+setInterval(function() {
+  pen.clearRect(0, 0, innerWidth, innerHeight);
 }, 1000 / 60);
+
+emulateGravity();
